@@ -1,0 +1,9 @@
+---
+import ServicePage from '../../components/ServicePage.astro';
+import { services } from '../../data/practice';
+export function getStaticPaths() {
+  return services.filter((s) => s.parent === 'personal-injury').map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+const { page } = Astro.props;
+---
+<ServicePage page={page} />

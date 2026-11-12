@@ -1,0 +1,139 @@
+---
+/**
+ * Short consultation request form.
+ * Delivery: POSTs JSON to `site.formEndpoint` when configured; otherwise opens a
+ * pre-filled email to the firm. Deliberately collects no case details.
+ */
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+interface Props { id?: string; heading?: string }
+const { id = 'consult', heading = 'Request a consultation' } = Astro.props;
+---
+<form class="form" id={`${id}-form`} novalidate data-endpoint={site.formEndpoint} data-email={site.email} data-consult-form>
+  <h3>{heading}</h3>
+  <p>Share how to reach you and the firm will follow up. All fields are required.</p>
+  <div class="form__grid">
+    <div class="field">
+      <label for={`${id}-name`}>Full name</label>
+      <input id={`${id}-name`} name="name" type="text" autocomplete="name" required aria-describedby={`${id}-name-err`} />
+      <span class="err" id={`${id}-name-err`} role="alert"></span>
+    </div>
+    <div class="field">
+      <label for={`${id}-phone`}>Phone</label>
+      <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby={`${id}-phone-err`} />
+      <span class="err" id={`${id}-phone-err`} role="alert"></span>
+    </div>
+    <div class="field">
+      <label for={`${id}-email`}>Email</label>
+      <input id={`${id}-email`} name="email" type="email" autocomplete="email" required aria-describedby={`${id}-email-err`} />
+      <span class="err" id={`${id}-email-err`} role="alert"></span>
+    </div>
+    <div class="field">
+      <label for={`${id}-service`}>How can the firm help?</label>
+      <select id={`${id}-service`} name="service" required aria-describedby={`${id}-service-err`}>
+        <option value="">Select one</option>
+        <option>Criminal defense</option>
+        <option>Personal injury</option>
+        <option>Not sure / other</option>
+      </select>
+      <span class="err" id={`${id}-service-err`} role="alert"></span>
+    </div>
+    <fieldset class="field field--full">
+      <legend>Preferred contact method</legend>
+      <div class="radios">
+        <label><input type="radio" name="contact_method" value="Phone call" checked /> Phone call</label>
+        <label><input type="radio" name="contact_method" value="Text message" /> Text message</label>
+        <label><input type="radio" name="contact_method" value="Email" /> Email</label>
+      </div>
+    </fieldset>
+    <div class="hp" aria-hidden="true">
+      <label for={`${id}-company`}>Company</label>
+      <input id={`${id}-company`} name="company" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+    <div class="field field--full">
+      <button class="btn btn--navy" type="submit">Send request <Icon name="arrow" class="arrow" /></button>
+    </div>
+    <p class="form__note field--full">
+      Please do not include details about your case in this form. Submitting it does not create an attorney-client
+      relationship. See the <a href="/privacy-policy/">privacy policy</a>.
+    </p>
+  </div>
+  <div class="form__status" role="status" aria-live="polite"></div>
+</form>
+
+<script>
+  const started = Date.now();
+  const rules: Record<string, (v: string) => string> = {
+    name: (v) => (v.trim().length < 2 ? 'Please enter your name.' : ''),
+    phone: (v) => (v.replace(/\D/g, '').length < 10 ? 'Please enter a 10-digit phone number.' : ''),
+    email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Please enter a valid email address.'),
+    service: (v) => (v ? '' : 'Please choose an option.'),
+  };
+
+  document.querySelectorAll<HTMLFormElement>('[data-consult-form]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.form__status')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+
+    const check = (el: HTMLInputElement | HTMLSelectElement) => {
+      const msg = rules[el.name]?.(el.value) ?? '';
+      const err = document.getElementById(`${el.id}-err`);
+      if (err) err.textContent = msg;
+      el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      return !msg;
+    };
+    const fields = () =>
+      Object.keys(rules).map((n) => form.elements.namedItem(n) as HTMLInputElement | HTMLSelectElement);
+
+    fields().forEach((el) => {
+      el.addEventListener('blur', () => check(el));
+      el.addEventListener('input', () => el.getAttribute('aria-invalid') === 'true' && check(el));
+    });
+
+    const say = (state: string, text: string) => {
+      status.dataset.state = state;
+      status.textContent = text;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const bad = fields().filter((el) => !check(el));
+      if (bad.length) {
+        bad[0].focus();
+        say('error', 'Please correct the highlighted fields and try again.');
+        return;
+      }
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      // Spam protection: honeypot field + minimum time on page.
+      if (data.company || Date.now() - started < 2500) {
+        say('success', 'Thank you. Your request has been received.');
+        return;
+      }
+      delete data.company;
+      const endpoint = form.dataset.endpoint;
+
+      if (!endpoint) {
+        const body = `Name: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\nRegarding: ${data.service}\nPreferred contact: ${data.contact_method}`;
+        window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Consultation request')}&body=${encodeURIComponent(body)}`;
+        say('success', 'Your email app should now open with your request ready to send. If it does not, please call 404-998-2992.');
+        return;
+      }
+
+      button.disabled = true;
+      say('pending', 'Sending your request…');
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ ...data, _subject: 'Website consultation request', page: location.pathname }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        say('success', 'Thank you. Your request has been sent and the firm will be in touch using your preferred contact method.');
+      } catch {
+        say('error', 'Sorry, your request could not be sent. Please call 404-998-2992 or email the firm directly.');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+</script>

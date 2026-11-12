@@ -1,0 +1,38 @@
+---
+import Icon from './Icon.astro';
+import GoogleLine from './GoogleLine.astro';
+import { site } from '../data/site';
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  mark: string;
+  tone?: 'defense' | 'injury' | 'plain';
+  crumbs: { label: string; href?: string }[];
+  trust?: boolean;
+  cta?: boolean;
+}
+const { eyebrow, title, lede, mark, tone = 'plain', crumbs, trust = true, cta = true } = Astro.props;
+---
+<section class:list={['phero', 'bg-deep', tone === 'injury' && 'phero--injury']} data-mark={mark}>
+  <div class="wrap phero__in">
+    <nav aria-label="Breadcrumb">
+      <ol class="crumbs">
+        <li><a href="/">Home</a></li>
+        {crumbs.map((c) => (
+          <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+        ))}
+      </ol>
+    </nav>
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 set:html={title} />
+    <p class="lede">{lede}</p>
+    {cta && (
+      <div class="btn-row">
+        <a class="btn btn--gold" href="#consultation">Request a Consultation <Icon name="arrow" class="arrow" /></a>
+        <a class="btn btn--ghost" href={site.phoneHref}><Icon name="phone" /> Call {site.phoneDisplay}</a>
+      </div>
+    )}
+    {trust && <div><GoogleLine /></div>}
+  </div>
+</section>

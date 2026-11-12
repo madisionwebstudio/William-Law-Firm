@@ -1,0 +1,7 @@
+---
+import Icon from './Icon.astro';
+import { google } from '../data/site';
+---
+<span class="stars" role="img" aria-label={`${google.rating} out of 5 stars`}>
+  {[1, 2, 3, 4, 5].map(() => <Icon name="star" />)}
+</span>

@@ -1,0 +1,303 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import GoogleG from '../components/GoogleG.astro';
+import Stars from '../components/Stars.astro';
+import Reviews from '../components/Reviews.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import heroImg from '../assets/attorney-hero.png';
+import portrait from '../assets/attorney-portrait.png';
+import { site, google, nav, reviews } from '../data/site';
+
+const faqs = [
+  {
+    q: 'What should I do if I am facing criminal charges in Georgia?',
+    a: 'Stay calm, be polite, and do not discuss the facts with police or anyone else until you have spoken with a lawyer. You have the right to remain silent and the right to an attorney. Keep every document you are given, note your court date, and speak with a criminal defense attorney as early as you can. This is general information, not advice about your specific situation.',
+  },
+  {
+    q: 'When should I contact a criminal defense attorney?',
+    a: 'As early as possible, ideally as soon as you learn you are being investigated or have been arrested. Early decisions about statements, bond and deadlines can shape the rest of a case, and some deadlines arrive quickly. After a DUI arrest, for example, you generally have only 30 days to act to protect your driver’s license.',
+  },
+  {
+    q: 'What happens after a DUI arrest?',
+    a: 'A Georgia DUI usually starts two separate tracks: the criminal case in court, and an administrative process that can suspend your license. In most cases you have 30 days from the arrest to request a hearing or apply for an ignition interlock permit. Read more on the <a href="/criminal-defense/dui-defense/">DUI defense page</a>.',
+  },
+  {
+    q: 'What should I do after a car accident?',
+    a: 'Get to safety, call 911, and get medical attention even if you feel fine, because some injuries appear later. If you can, photograph the scene and vehicles, exchange information, and collect witness names. Be careful about giving a recorded statement to the other driver’s insurer before you understand your rights. See the <a href="/personal-injury/car-accidents/">car accident page</a> for more.',
+  },
+  {
+    q: 'How do personal injury claims work?',
+    a: 'Most claims begin with an investigation and medical treatment, followed by a demand to the at-fault party’s insurance company and a period of negotiation. If a fair resolution cannot be reached, a lawsuit may be filed. In Georgia the general deadline to file a personal injury lawsuit is two years from the date of injury, and some claims have much shorter notice deadlines.',
+  },
+  {
+    q: 'How do I schedule a consultation?',
+    a: `Call the firm at <a href="${site.phoneHref}">${site.phoneDisplay}</a> or send the short <a href="#consultation">request form</a> on this page. The form asks only for your contact details and the general type of matter, so you never have to put sensitive information in writing.`,
+  },
+  {
+    q: 'Does the firm offer consultations by phone?',
+    a: 'Yes. You can speak with the firm by phone, which many clients find easiest for a first conversation. Choose your preferred contact method on the request form and the firm will follow up that way.',
+  },
+];
+
+const why = [
+  {
+    h: 'You work directly with your attorney',
+    p: 'Iymaan Williams handles your matter personally. The person who learns your story is the person who prepares your case and speaks for you.',
+    name: reviews[0].name,
+    q: 'made herself available by giving me every possible way to contact her whenever I had questions or concerns',
+  },
+  {
+    h: 'Plain-English explanations',
+    p: 'Legal processes are confusing by design. You will have your options explained clearly, step by step, so that the decisions are truly yours.',
+    name: reviews[1].name,
+    q: 'remarkable patience in clearly explaining my options',
+  },
+  {
+    h: 'You are kept informed',
+    p: 'Communication is the subject clients raise most often in the firm’s Google reviews. You should never have to wonder where your case stands.',
+    name: reviews[0].name,
+    q: 'She kept me informed every step of the way',
+  },
+  {
+    h: 'Careful, detailed preparation',
+    p: 'Police reports, medical records, timelines and deadlines are reviewed closely, because the details are often where a case turns.',
+    name: reviews[1].name,
+    q: 'meticulous attention to detail',
+  },
+];
+---
+<Base
+  title="Criminal Defense & Injury Lawyer in Snellville, GA | Williams Law Firm"
+  description="Attorney Iymaan Williams handles criminal defense and personal injury cases in Snellville and Gwinnett County, GA. 5.0 on Google. Call 404-998-2992."
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__in">
+      <div class="hero__copy">
+        <p class="eyebrow">Criminal Defense · Personal Injury</p>
+        <h1>
+          <span>Strong legal representation.</span>
+          <span>Personal attention.</span>
+          <span><em class="gold">Your future matters.</em></span>
+        </h1>
+        <p class="lede">
+          Attorney Iymaan Williams defends people charged with crimes and represents people hurt by someone else’s
+          negligence. You get clear answers, steady communication and an attorney who knows your case personally.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--gold" href="#consultation">Request a Consultation <Icon name="arrow" class="arrow" /></a>
+          <a class="btn btn--ghost" href={site.phoneHref}><Icon name="phone" /> Call {site.phoneDisplay}</a>
+        </div>
+        <p class="hero__loc"><Icon name="pin" /> Serving Snellville, Gwinnett County and nearby Georgia communities.</p>
+      </div>
+      <figure class="hero__figure">
+        <div class="hero__arch">
+        <Image
+          src={heroImg}
+          alt="Attorney Iymaan Williams of The Williams Law Firm"
+          widths={[420, 640, 900]}
+          sizes="(max-width: 900px) 80vw, 34rem"
+          loading="eager"
+          fetchpriority="high"
+          quality={82}
+        />
+        </div>
+        <figcaption class="hero__plate">
+          <span>Attorney at Law</span>
+          <strong>Iymaan Williams</strong>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- GOOGLE TRUST BAR -->
+  <section class="trustbar" aria-label="Google reviews summary">
+    <div class="wrap trustbar__in">
+      <div class="trustbar__score">
+        <span class="trustbar__num">{google.rating}</span>
+        <div class="trustbar__meta">
+          <Stars />
+          <span class="trustbar__g"><GoogleG /> <span><b>{google.reviewCount} reviews</b> on Google</span></span>
+        </div>
+      </div>
+      <blockquote class="trustbar__say">
+        “{reviews[0].lead}”
+        <cite>{reviews[0].name} · Google review</cite>
+      </blockquote>
+      <a class="tlink" href="#reviews">Read reviews <Icon name="arrow" /></a>
+    </div>
+  </section>
+
+  <!-- ATTORNEY INTRODUCTION -->
+  <section class="section bg-ivory" aria-labelledby="intro-h">
+    <div class="wrap split">
+      <div class="intro__media sticky" data-reveal>
+        <Image src={portrait} alt="Portrait of attorney Iymaan Williams" widths={[360, 560, 832]} sizes="(max-width: 900px) 80vw, 26rem" quality={82} />
+      </div>
+      <div data-reveal>
+        <p class="eyebrow">Meet your attorney</p>
+        <h2 id="intro-h">Personal attention. Thoughtful legal representation.</h2>
+        <p class="lede" style="margin-top:1.5rem">
+          The Williams Law Firm is the practice of attorney Iymaan Williams. She represents clients in two areas where
+          the stakes are personal: criminal defense and personal injury.
+        </p>
+        <p>
+          Her approach is simple. Listen first. Explain the law in plain language. Prepare carefully. And stay in touch,
+          so that no client is left guessing about what happens next. It is the reason so many of the firm’s reviews
+          talk about communication before anything else.
+        </p>
+        <ul class="creds">
+          <li><span>Education</span><div><b>University of Georgia School of Law</b>Juris Doctor</div></li>
+          <li><span>Education</span><div><b>Georgia State University</b>Bachelor of Arts</div></li>
+          <li><span>Practice</span><div><b>Criminal defense and personal injury</b>Based in Snellville, Georgia</div></li>
+        </ul>
+        <a class="tlink" href="/about/">More about Iymaan Williams <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE AREAS -->
+  <section aria-labelledby="practice-h">
+    <div class="wrap section--tight bg-ivory" style="padding-top:0">
+      <p class="eyebrow">Practice areas</p>
+      <h2 id="practice-h" class="measure">Two practices. One standard of care.</h2>
+    </div>
+    <div class="duo">
+      <article class="duo__panel duo__panel--dark" data-reveal>
+        <div class="duo__no" aria-hidden="true">01</div>
+        <h3>Criminal Defense</h3>
+        <p class="duo__tag">When your freedom and record are on the line.</p>
+        <p>
+          An arrest is not a conviction. The firm protects your rights from the first court date forward, examines how
+          the evidence was gathered, and helps you make informed decisions at every stage.
+        </p>
+        <ul class="duo__list">
+          {nav.criminal.slice(1).map((l) => <li><a href={l.href}>{l.label} <Icon name="arrow" /></a></li>)}
+        </ul>
+        <p class="duo__also">Also handled: traffic violations and other misdemeanor and felony charges.</p>
+        <a class="tlink" href="/criminal-defense/">Explore criminal defense <Icon name="arrow" /></a>
+      </article>
+      <article class="duo__panel duo__panel--light" data-reveal>
+        <div class="duo__no" aria-hidden="true">02</div>
+        <h3>Personal Injury</h3>
+        <p class="duo__tag">When someone else’s carelessness changes your life.</p>
+        <p>
+          After an injury you should be able to focus on getting better. The firm deals with the insurance company,
+          documents what the injury has cost you, and pursues fair compensation on your behalf.
+        </p>
+        <ul class="duo__list">
+          {nav.injury.slice(1).map((l) => <li><a href={l.href}>{l.label} <Icon name="arrow" /></a></li>)}
+        </ul>
+        <p class="duo__also">Not sure whether you have a claim? A conversation is the simplest way to find out.</p>
+        <a class="tlink" href="/personal-injury/">Explore personal injury <Icon name="arrow" /></a>
+      </article>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="section bg-paper" aria-labelledby="why-h">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <p class="eyebrow">Why The Williams Law Firm</p>
+        <h2 id="why-h">What clients say sets the firm apart.</h2>
+        <p class="lede" style="margin-top:1.5rem">
+          Any firm can describe itself. These four reasons come from the people who hired it, in their own words on
+          Google.
+        </p>
+        <p style="margin-top:2rem">
+          <a class="tlink" href="#reviews">See the reviews <Icon name="arrow" /></a>
+        </p>
+      </div>
+      <ol class="why" data-reveal>
+        {why.map((w) => (
+          <li>
+            <div>
+              <h3>{w.h}</h3>
+              <p>{w.p}</p>
+            </div>
+            <p class="proof"><GoogleG /><span><q>{w.q}</q> — {w.name}, Google review</span></p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section bg-navy" aria-labelledby="process-h">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2 id="process-h" class="measure">Three steps from uncertainty to a clear plan.</h2>
+      <ol class="steps">
+        <li data-reveal>
+          <span class="n">Step one</span>
+          <h3>Contact the firm</h3>
+          <p>Call {site.phoneDisplay} or send the short request form. You only need to share how to reach you and the general type of matter.</p>
+        </li>
+        <li data-reveal>
+          <span class="n">Step two</span>
+          <h3>Discuss your situation</h3>
+          <p>Speak with attorney Iymaan Williams about what happened. She will listen, ask questions, and tell you what she needs to know more about.</p>
+        </li>
+        <li data-reveal>
+          <span class="n">Step three</span>
+          <h3>Understand your legal options</h3>
+          <p>You will leave the conversation knowing where you stand, what the process looks like and what your choices are, explained in plain language.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <Reviews />
+
+  <!-- LOCAL PRESENCE -->
+  <section class="section bg-sand" aria-labelledby="local-h">
+    <div class="wrap split split--rev">
+      <div data-reveal>
+        <p class="eyebrow">Local presence</p>
+        <h2 id="local-h">Rooted in Snellville. Serving Gwinnett County and beyond.</h2>
+        <p class="lede" style="margin-top:1.5rem">
+          The firm’s office is on Scenic Highway in Snellville, a short drive from the Gwinnett County courts in
+          Lawrenceville, where most local criminal and civil cases are heard.
+        </p>
+        <ul class="areas">
+          <li><b>Snellville</b><span>Home of the firm’s office</span></li>
+          <li><b>Gwinnett County</b><span>State, Superior and Recorder’s Court matters</span></li>
+          <li><b>Lawrenceville</b><span>The county seat and courthouse</span></li>
+          <li><b>Conyers</b><span>Rockdale County clients and cases</span></li>
+        </ul>
+      </div>
+      <div class="local__card" data-reveal>
+        <dl class="dl">
+          <div><dt>Office</dt><dd>{site.address.street}<br />{site.address.city}, {site.address.stateName} {site.address.zip}</dd></div>
+          <div><dt>Phone</dt><dd><a href={site.phoneHref}>{site.phoneDisplay}</a></dd></div>
+          <div><dt>Email</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+          <div><dt>Hours</dt><dd>{site.hours.map((h) => <>{h.days}<br /><span style="color:var(--slate)">{h.time}</span><br /></>)}</dd></div>
+        </dl>
+        <p style="margin-top:1.75rem">
+          <a class="tlink" href={site.directionsUrl} target="_blank" rel="noopener">Get directions <Icon name="arrow" /><span class="sr-only">(opens Google Maps in a new tab)</span></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-paper" aria-labelledby="faq-h">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <p class="eyebrow">Common questions</p>
+        <h2 id="faq-h">Answers before you call.</h2>
+        <p class="lede" style="margin-top:1.5rem">
+          General information for people in Georgia who are deciding what to do next. For advice about your own
+          situation, speak with an attorney.
+        </p>
+      </div>
+      <div data-reveal><Faq items={faqs} /></div>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>

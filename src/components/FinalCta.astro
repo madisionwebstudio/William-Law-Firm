@@ -1,0 +1,26 @@
+---
+import ContactForm from './ContactForm.astro';
+import GoogleLine from './GoogleLine.astro';
+import { site } from '../data/site';
+interface Props { heading?: string; body?: string }
+const {
+  heading = 'Let’s discuss your <em class="gold">legal situation.</em>',
+  body = 'A legal problem is easier to face once you understand it. Reach out, explain what happened, and get a clear picture of your options from the attorney who would handle your matter.',
+} = Astro.props;
+---
+<section class="section final bg-deep" id="consultation" aria-labelledby="final-h">
+  <div class="wrap split split--even" style="align-items:center">
+    <div data-reveal>
+      <p class="eyebrow">Consultations</p>
+      <h2 id="final-h" set:html={heading} />
+      <p class="lede">{body}</p>
+      <span class="final__lbl">Call the firm</span>
+      <a class="final__phone" href={site.phoneHref}>{site.phoneDisplay}</a>
+      <div><GoogleLine note="See what clients say" /></div>
+      <p class="fine" style="margin-top:1.5rem">Office hours: Monday to Friday, 8:30 AM to 5:00 PM. Consultations are available by phone.</p>
+    </div>
+    <div data-reveal>
+      <ContactForm />
+    </div>
+  </div>
+</section>

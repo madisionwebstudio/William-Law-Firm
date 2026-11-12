@@ -1,0 +1,171 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import AttorneyStrip from '../../components/AttorneyStrip.astro';
+import Faq from '../../components/Faq.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import Icon from '../../components/Icon.astro';
+import GoogleG from '../../components/GoogleG.astro';
+import { site, reviews } from '../../data/site';
+
+const crumbs = [{ label: 'Criminal Defense' }];
+const faqs = [
+  {
+    q: 'Should I talk to the police if I have nothing to hide?',
+    a: 'You have the right to remain silent, and using it is not an admission of anything. Well-meaning explanations are often misunderstood or taken out of context. Be polite, give your identifying information, and say that you would like to speak with a lawyer before answering questions.',
+  },
+  {
+    q: 'What is the difference between a misdemeanor and a felony in Georgia?',
+    a: 'A misdemeanor is generally punishable by up to 12 months in jail and a fine of up to $1,000. A felony is punishable by more than a year in prison. Misdemeanors in Gwinnett County are usually handled in State Court, while felonies are prosecuted in Superior Court.',
+  },
+  {
+    q: 'How soon will I see a judge after an arrest?',
+    a: 'Georgia law generally requires that a person arrested without a warrant be brought before a judge within 48 hours, and within 72 hours when the arrest was made on a warrant. At that first appearance the judge explains the charges and, in many cases, addresses bond.',
+  },
+  {
+    q: 'Can a criminal record be cleared in Georgia?',
+    a: 'Sometimes. Georgia uses “record restriction” rather than expungement, and eligibility depends on how the case ended and what the charge was. Certain outcomes, such as dismissals and some first-offender dispositions, may qualify. An attorney can review your history and tell you what is possible.',
+  },
+  {
+    q: 'I plan to plead guilty. Do I still need a lawyer?',
+    a: 'It is wise to speak with one first. A plea has consequences beyond the sentence, including effects on your record, license, employment and immigration status. A lawyer can also identify problems with the case or alternatives you may not know exist.',
+  },
+];
+const stages = [
+  { k: 'Stage 1', h: 'Arrest and first appearance', p: 'After booking you are brought before a judge, told the charges and, in many cases, considered for bond. What you say during this period can be used later.' },
+  { k: 'Stage 2', h: 'Bond', p: 'Bond lets you remain free while the case is pending, usually with conditions. Some serious charges can only be bonded by a Superior Court judge.' },
+  { k: 'Stage 3', h: 'Formal charges', p: 'The prosecutor files an accusation or presents the case to a grand jury for indictment. Charges can change at this point, in either direction.' },
+  { k: 'Stage 4', h: 'Arraignment', p: 'You enter a plea. Deadlines for filing important defense motions generally begin to run from this date.' },
+  { k: 'Stage 5', h: 'Discovery and motions', p: 'Your attorney obtains the State’s evidence, investigates independently and asks the court to exclude evidence that was obtained unlawfully.' },
+  { k: 'Stage 6', h: 'Resolution', p: 'A case may end in dismissal, a diversion program, a negotiated plea or a trial before a judge or jury. You decide, with your attorney’s advice.' },
+];
+---
+<Base
+  title="Criminal Defense Lawyer in Snellville, GA | The Williams Law Firm"
+  description="Attorney Iymaan Williams defends DUI, drug, assault and other misdemeanor and felony charges in Snellville and Gwinnett County. Call 404-998-2992."
+  crumbs={crumbs}
+>
+  <PageHero
+    eyebrow="Criminal Defense · Snellville & Gwinnett County"
+    title='An arrest is not a conviction. <em class="gold">Your defense starts now.</em>'
+    lede="Being charged with a crime is frightening, and the system moves quickly. The Williams Law Firm protects your rights at every stage, explains exactly what you are facing, and prepares your case as if your future depends on it. Because it does."
+    mark="Defense"
+    tone="defense"
+    crumbs={crumbs}
+  />
+
+  <AttorneyStrip
+    heading="You will know your attorney, and she will know your case."
+    body="Iymaan Williams personally handles the criminal matters the firm takes on. Clients describe a lawyer who stays reachable, explains each step and keeps them informed from the first hearing to the last."
+  />
+
+  <!-- Charges -->
+  <section class="section bg-paper" aria-labelledby="charges-h">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <p class="eyebrow">Charges the firm handles</p>
+        <h2 id="charges-h">Misdemeanor or felony, the approach is the same: prepare.</h2>
+        <p class="lede" style="margin-top:1.25rem">
+          The firm represents people at every level of seriousness, from a first traffic offense to the gravest felony
+          accusations.
+        </p>
+      </div>
+      <ul class="ledger" data-reveal>
+        <li><h3><a href="/criminal-defense/dui-defense/">DUI defense</a></h3><p>Alcohol and drug DUI charges, plus the separate license suspension process that begins at arrest.</p></li>
+        <li><h3><a href="/criminal-defense/drug-charges/">Drug charges</a></h3><p>Possession, possession with intent to distribute and trafficking.</p></li>
+        <li><h3><a href="/criminal-defense/assault-violent-crimes/">Assault and violent crimes</a></h3><p>Simple and aggravated assault and battery, family violence charges and other serious violent felonies, including homicide.</p></li>
+        <li><h3>Traffic violations</h3><p>Citations and traffic offenses that put your license, insurance rates and driving record at risk.</p></li>
+        <li><h3>Other charges</h3><p>Facing something not listed here? Call the firm. If it is not a matter the firm handles, you will be told so plainly.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Consequences -->
+  <section class="section bg-ivory" aria-labelledby="stakes-h">
+    <div class="wrap">
+      <div class="measure" style="margin-bottom:clamp(2rem,4vw,3.5rem)" data-reveal>
+        <p class="eyebrow">What is at stake</p>
+        <h2 id="stakes-h">A conviction reaches further than the sentence.</h2>
+        <p class="lede" style="margin-top:1.25rem">
+          Jail and fines are only part of the picture. Understanding the full consequences is essential before you
+          decide how to respond to a charge.
+        </p>
+      </div>
+      <div class="cards" data-reveal>
+        <div><span class="k">Liberty</span><h3>Jail, prison and probation</h3><p>Up to 12 months for a misdemeanor and more than a year for a felony, often followed by supervised probation with strict conditions.</p></div>
+        <div><span class="k">Record</span><h3>A permanent criminal history</h3><p>Convictions appear on background checks used by employers, landlords and licensing boards.</p></div>
+        <div><span class="k">Driving</span><h3>License suspension</h3><p>DUI, certain drug offenses and serious traffic charges can cost you the ability to drive.</p></div>
+        <div><span class="k">Rights</span><h3>Firearms and civil rights</h3><p>A felony conviction ends the right to possess a firearm and affects other civil rights.</p></div>
+        <div><span class="k">Status</span><h3>Immigration consequences</h3><p>For non-citizens, even some misdemeanors can affect the ability to remain in the country.</p></div>
+        <div><span class="k">Livelihood</span><h3>Career and education</h3><p>Professional licenses, security clearances and school enrollment can all be affected.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section bg-navy" aria-labelledby="process-h">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <p class="eyebrow">The road ahead</p>
+        <h2 id="process-h">How a Georgia criminal case moves.</h2>
+        <p class="lede" style="margin-top:1.25rem">
+          No two cases follow exactly the same path, but most pass through these stages. Knowing them removes a great
+          deal of the fear.
+        </p>
+        <p class="fine" style="margin-top:1.5rem">
+          In Gwinnett County, most cases are heard at the Gwinnett Justice and Administration Center in Lawrenceville.
+          Some begin in a city court such as Snellville Municipal Court.
+        </p>
+      </div>
+      <ul class="ledger" data-reveal>
+        {stages.map((s) => (
+          <li><h3><span class="eyebrow" style="display:block;margin-bottom:.4rem">{s.k}</span>{s.h}</h3><p>{s.p}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Timing -->
+  <section class="section bg-paper" aria-labelledby="time-h">
+    <div class="wrap split split--even">
+      <div class="prose" data-reveal>
+        <p class="eyebrow">Why timing matters</p>
+        <h2 id="time-h">The earlier you get advice, the more options you keep.</h2>
+        <p>
+          Evidence that helps you does not wait. Surveillance footage is recorded over. Witnesses become hard to find
+          and memories fade. Some legal deadlines, such as the 30 days to respond to a DUI license suspension, begin on
+          the day of arrest.
+        </p>
+        <p>
+          Early involvement also means someone is speaking for you before formal charges are filed, while the prosecutor
+          is still deciding what the case should be. And it means you are less likely to make an avoidable mistake, such
+          as giving a statement or missing a court date.
+        </p>
+      </div>
+      <figure class="review" data-reveal style="align-self:center">
+        <p class="review__theme" style="margin-top:0">{reviews[1].theme}</p>
+        <blockquote><p>“{reviews[1].quote}”</p></blockquote>
+        <figcaption>
+          <span><b>{reviews[1].name}</b>Google review</span>
+          <span class="review__src"><GoogleG /> Posted on Google</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section bg-ivory" aria-labelledby="faq-h">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-h">Criminal defense: what people ask first.</h2>
+        <p style="margin-top:2rem"><a class="tlink" href={site.phoneHref}>Call {site.phoneDisplay} <Icon name="arrow" /></a></p>
+      </div>
+      <div data-reveal><Faq items={faqs} /></div>
+    </div>
+  </section>
+
+  <FinalCta
+    heading='Facing a charge? <em class="gold">Don’t face it alone.</em>'
+    body="Speak with attorney Iymaan Williams about what happened and what comes next. You will get a clear explanation of the process and your options."
+  />
+</Base>

@@ -1,0 +1,166 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import AttorneyStrip from '../../components/AttorneyStrip.astro';
+import Faq from '../../components/Faq.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import Icon from '../../components/Icon.astro';
+import GoogleG from '../../components/GoogleG.astro';
+import { reviews } from '../../data/site';
+
+const crumbs = [{ label: 'Personal Injury' }];
+const faqs = [
+  {
+    q: 'Do I have a personal injury case?',
+    a: 'In general, a claim requires that someone else failed to act with reasonable care, that this failure caused your injury, and that you suffered real losses as a result. Whether your situation meets that standard depends on the facts, and a conversation with an attorney is the most reliable way to find out.',
+  },
+  {
+    q: 'How long do I have to file a claim in Georgia?',
+    a: 'The general deadline for a personal injury lawsuit is two years from the date of injury. Some claims have far shorter deadlines, particularly claims against a city, county or state agency, which require written notice within months. Do not wait to ask about the deadline that applies to you.',
+  },
+  {
+    q: 'What if I was partly to blame?',
+    a: 'Georgia’s modified comparative negligence rule reduces your compensation by your percentage of fault, and bars recovery if you were 50 percent or more at fault. Insurers often try to shift blame onto the injured person, so it is worth having their assessment reviewed.',
+  },
+  {
+    q: 'Will my case go to court?',
+    a: 'Most personal injury claims are resolved through negotiation with the insurance company. If the insurer will not make a fair offer, filing a lawsuit may be the next step. That decision is always yours, made after your attorney explains the risks and benefits.',
+  },
+  {
+    q: 'How much is my case worth?',
+    a: 'No ethical attorney can tell you a number at the start. Value depends on the severity of your injuries, your medical costs and lost income, how the injury has affected your life, the strength of the evidence and the insurance available. You should be wary of anyone who promises a specific result.',
+  },
+];
+---
+<Base
+  title="Personal Injury Lawyer in Snellville, GA | The Williams Law Firm"
+  description="Injured in Snellville or Gwinnett County? Attorney Iymaan Williams handles car accident and slip and fall claims with personal attention. Call 404-998-2992."
+  crumbs={crumbs}
+>
+  <PageHero
+    eyebrow="Personal Injury · Snellville & Gwinnett County"
+    title='You focus on healing. <em class="gold">The firm handles the rest.</em>'
+    lede="An injury disrupts everything at once: your health, your work, your family’s routine. If someone else’s carelessness caused it, Georgia law gives you the right to seek compensation. The Williams Law Firm guides you through that process with patience and clear communication."
+    mark="Recovery"
+    tone="injury"
+    crumbs={crumbs}
+  />
+
+  <AttorneyStrip
+    heading="An attorney who listens before she advises."
+    body="Iymaan Williams takes the time to understand how an injury has affected your life, not just your medical chart. Then she explains your options step by step and keeps you informed as your claim moves forward."
+  />
+
+  <!-- Case types -->
+  <section class="section bg-paper" aria-labelledby="types-h">
+    <div class="wrap">
+      <div class="measure" style="margin-bottom:clamp(2rem,4vw,3.5rem)" data-reveal>
+        <p class="eyebrow">Cases the firm handles</p>
+        <h2 id="types-h">Injuries caused by someone else’s negligence.</h2>
+      </div>
+      <div class="cards cards--2" data-reveal>
+        <div>
+          <span class="k">Motor vehicle</span>
+          <h3>Car accidents</h3>
+          <p>Collisions caused by distracted, speeding, impaired or careless drivers, including claims involving uninsured and underinsured motorists.</p>
+          <p style="margin-top:1.25rem"><a class="tlink" href="/personal-injury/car-accidents/">Car accident claims <Icon name="arrow" /></a></p>
+        </div>
+        <div>
+          <span class="k">Premises liability</span>
+          <h3>Slip and fall injuries</h3>
+          <p>Falls caused by unsafe conditions in stores, parking lots, apartment complexes and other properties whose owners failed to keep them reasonably safe.</p>
+          <p style="margin-top:1.25rem"><a class="tlink" href="/personal-injury/slip-and-fall/">Slip and fall claims <Icon name="arrow" /></a></p>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:1.5rem">Injured in another way? Call the firm. If your matter is not one the firm handles, you will be told so plainly.</p>
+    </div>
+  </section>
+
+  <!-- How the firm helps -->
+  <section class="section bg-sand" aria-labelledby="help-h">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <p class="eyebrow">How the firm helps</p>
+        <h2 id="help-h">What it means to have someone in your corner.</h2>
+        <figure style="margin:2.5rem 0 0">
+          <blockquote class="pullquote">“{reviews[2].lead}”</blockquote>
+          <figcaption style="display:flex;align-items:center;gap:.5rem;margin-top:1rem;padding-left:1.5rem;font-size:.86rem;color:var(--slate)">
+            <GoogleG /> {reviews[2].name}, Google review
+          </figcaption>
+        </figure>
+      </div>
+      <ul class="checks" data-reveal>
+        <li><b>Handling the insurance company.</b> Calls, letters and forms from adjusters go to the firm, so you are not pressured into statements or a rushed settlement.</li>
+        <li><b>Investigating what happened.</b> Reports, photographs, witness accounts and video are collected and preserved while they are still available.</li>
+        <li><b>Documenting your losses.</b> Medical records, bills, lost wages and the daily impact of the injury are assembled into a complete picture.</li>
+        <li><b>Identifying every source of recovery.</b> All potentially applicable insurance policies are reviewed, including your own coverage.</li>
+        <li><b>Negotiating for you.</b> A documented demand is presented and negotiated, and every offer is explained to you with an honest opinion.</li>
+        <li><b>Keeping you informed.</b> You receive updates as your claim progresses and prompt answers to your questions.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Insurance -->
+  <section class="section bg-paper" aria-labelledby="ins-h">
+    <div class="wrap split split--rev">
+      <div class="prose" data-reveal>
+        <p class="eyebrow">Understanding insurance claims</p>
+        <h2 id="ins-h">The adjuster is friendly. The adjuster is not on your side.</h2>
+        <p>
+          After an injury, the at-fault party’s insurance company will usually contact you quickly. The adjuster may be
+          courteous and sympathetic, but the company’s financial interest is in paying as little as possible. That is
+          not cynicism; it is how insurance works.
+        </p>
+        <h3>Common tactics to recognize</h3>
+        <ul>
+          <li><strong>Recorded statements</strong> taken early, before you know the extent of your injuries.</li>
+          <li><strong>Quick, low offers</strong> that require you to sign away all future claims.</li>
+          <li><strong>Broad medical authorizations</strong> used to search your history for unrelated conditions.</li>
+          <li><strong>Blame-shifting,</strong> because under Georgia law your share of fault reduces what they must pay.</li>
+          <li><strong>Delay,</strong> in the hope that financial pressure will lead you to accept less.</li>
+        </ul>
+        <p>
+          You are entitled to take your time, to understand your injuries fully and to have an attorney speak with the
+          insurer for you.
+        </p>
+      </div>
+      <aside class="callout sticky" data-reveal style="margin:0">
+        <h3>Georgia’s key rules, briefly</h3>
+        <p><strong>Two years</strong> is the general deadline to file an injury lawsuit.</p>
+        <p><strong>Under 50 percent</strong> at fault, you may still recover, reduced by your share.</p>
+        <p><strong>Months, not years,</strong> may be all you have to give notice of a claim against a government body.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section bg-navy" aria-labelledby="pi-process-h">
+    <div class="wrap">
+      <div class="measure" data-reveal>
+        <p class="eyebrow">The personal injury process</p>
+        <h2 id="pi-process-h">From first conversation to resolution.</h2>
+      </div>
+      <ol class="steps steps--4">
+        <li data-reveal><span class="n">One</span><h3>Consultation</h3><p>You explain what happened. The firm explains how the law applies and whether it can help.</p></li>
+        <li data-reveal><span class="n">Two</span><h3>Investigation and treatment</h3><p>Evidence is gathered while you concentrate on following your doctors’ advice.</p></li>
+        <li data-reveal><span class="n">Three</span><h3>Demand and negotiation</h3><p>Once your losses are understood, a detailed demand is sent and negotiated with the insurer.</p></li>
+        <li data-reveal><span class="n">Four</span><h3>Settlement or lawsuit</h3><p>Most claims settle. If a fair offer is not made, your options, including litigation, are explained.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section bg-ivory" aria-labelledby="faq-h">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-h">Personal injury: what people ask first.</h2>
+      </div>
+      <div data-reveal><Faq items={faqs} /></div>
+    </div>
+  </section>
+
+  <FinalCta
+    heading='Hurt and unsure what to do? <em class="gold">Start with a conversation.</em>'
+    body="Tell the firm what happened. You will get an honest view of whether you may have a claim and what the process would involve."
+  />
+</Base>

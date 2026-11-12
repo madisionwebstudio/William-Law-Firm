@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/attorney-portrait.png';
+import Icon from './Icon.astro';
+interface Props { heading: string; body: string }
+const { heading, body } = Astro.props;
+---
+<section class="section--tight bg-paper" style="border-bottom:1px solid var(--line)">
+  <div class="wrap astrip" data-reveal>
+    <div class="astrip__img">
+      <Image src={portrait} alt="Attorney Iymaan Williams" widths={[200, 400]} sizes="176px" quality={80} />
+    </div>
+    <div>
+      <p class="eyebrow">Your attorney</p>
+      <h2>{heading}</h2>
+      <p>{body}</p>
+    </div>
+    <a class="tlink" href="/about/">About Iymaan Williams <Icon name="arrow" /></a>
+  </div>
+</section>

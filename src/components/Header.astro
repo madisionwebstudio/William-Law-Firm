@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-gold.png';
+import Icon from './Icon.astro';
+import { site, nav } from '../data/site';
+const path = Astro.url.pathname;
+const cur = (href: string) => (path === href ? 'page' : undefined);
+---
+<header class="header">
+  <div class="wrap header__in">
+    <a class="brand" href="/" aria-label="The Williams Law Firm, home">
+      <Image src={logo} alt="The Williams Law Firm" widths={[200, 400]} sizes="160px" loading="eager" />
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="/" aria-current={cur('/')}>Home</a></li>
+        <li><a class="nav__link" href="/about/" aria-current={cur('/about/')}>About</a></li>
+        <li class="has-menu">
+          <button class="nav__trigger" type="button" aria-expanded="false" aria-controls="practice-menu">
+            Practice Areas <Icon name="chev" />
+          </button>
+          <div class="menu" id="practice-menu" data-open="false">
+            <div>
+              <p class="menu__title">Criminal Defense</p>
+              <ul>{nav.criminal.map((l) => <li><a href={l.href}>{l.label}{l.note && <small>{l.note}</small>}</a></li>)}</ul>
+            </div>
+            <div>
+              <p class="menu__title">Personal Injury</p>
+              <ul>{nav.injury.map((l) => <li><a href={l.href}>{l.label}{l.note && <small>{l.note}</small>}</a></li>)}</ul>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav__link" href="/#reviews">Reviews</a></li>
+        <li><a class="nav__link" href="/contact/" aria-current={cur('/contact/')}>Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__cta">
+      <a class="header__phone" href={site.phoneHref}>
+        <span>Call the firm</span>
+        <strong>{site.phoneDisplay}</strong>
+      </a>
+      <a class="btn btn--gold" href={path === '/contact/' ? '#consultation' : '/contact/'}>Consultation</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Menu">
+        <Icon name="menu" class="bars" /><Icon name="close" class="x" />
+      </button>
+    </div>
+  </div>
+
+  <div class="drawer" id="drawer" data-open="false">
+    <nav class="drawer__main" aria-label="Mobile">
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <details>
+        <summary>Practice Areas</summary>
+        <div class="drawer__sub">
+          <p>Criminal Defense</p>
+          {nav.criminal.map((l) => <a href={l.href}>{l.label}</a>)}
+          <p>Personal Injury</p>
+          {nav.injury.map((l) => <a href={l.href}>{l.label}</a>)}
+        </div>
+      </details>
+      <a href="/#reviews">Reviews</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <a class="btn btn--gold" href="/contact/">Request a Consultation</a>
+    <a class="btn btn--ghost" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+  </div>
+</header>
+
+<script>
+  const trigger = document.querySelector<HTMLButtonElement>('.nav__trigger')!;
+  const menu = document.getElementById('practice-menu')!;
+  const holder = trigger.parentElement!;
+  const setMenu = (open: boolean) => {
+    trigger.setAttribute('aria-expanded', String(open));
+    menu.dataset.open = String(open);
+  };
+  trigger.addEventListener('click', () => setMenu(menu.dataset.open !== 'true'));
+  if (matchMedia('(hover: hover)').matches) {
+    holder.addEventListener('mouseenter', () => setMenu(true));
+    holder.addEventListener('mouseleave', () => setMenu(false));
+  }
+  holder.addEventListener('focusout', (e) => {
+    if (!holder.contains(e.relatedTarget as Node)) setMenu(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (menu.dataset.open === 'true') {
+      setMenu(false);
+      trigger.focus();
+    }
+    setDrawer(false);
+  });
+
+  const burger = document.querySelector<HTMLButtonElement>('.burger')!;
+  const drawer = document.getElementById('drawer')!;
+  const setDrawer = (open: boolean) => {
+    burger.setAttribute('aria-expanded', String(open));
+    drawer.dataset.open = String(open);
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', () => setDrawer(drawer.dataset.open !== 'true'));
+  drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setDrawer(false)));
+</script>

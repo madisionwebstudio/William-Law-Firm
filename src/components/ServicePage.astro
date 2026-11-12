@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import AttorneyStrip from './AttorneyStrip.astro';
+import Blocks from './Blocks.astro';
+import Faq from './Faq.astro';
+import FinalCta from './FinalCta.astro';
+import GoogleLine from './GoogleLine.astro';
+import type { ServicePage } from '../data/practice';
+import { site } from '../data/site';
+interface Props { page: ServicePage }
+const { page } = Astro.props;
+const injury = page.parent === 'personal-injury';
+const parentLabel = injury ? 'Personal Injury' : 'Criminal Defense';
+const crumbs = [{ label: parentLabel, href: `/${page.parent}/` }, { label: page.nav }];
+const service = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: page.nav,
+  serviceType: `${page.nav} legal representation`,
+  provider: { '@id': `${site.url}/#firm` },
+  areaServed: ['Snellville, GA', 'Gwinnett County, GA', 'Lawrenceville, GA', 'Conyers, GA'],
+  url: `${site.url}/${page.parent}/${page.slug}/`,
+};
+---
+<Base title={page.title} description={page.description} crumbs={crumbs} schema={[service]}>
+  <PageHero eyebrow={page.eyebrow} title={page.h1} lede={page.lede} mark={page.mark} tone={injury ? 'injury' : 'defense'} crumbs={crumbs} />
+  <AttorneyStrip heading={page.attorney.heading} body={page.attorney.body} />
+  <Blocks blocks={page.blocks} />
+
+  <section class="section bg-ivory" aria-labelledby="faq-h">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-h">{page.nav}: frequently asked questions.</h2>
+        <p style="margin-top:2rem"><GoogleLine /></p>
+      </div>
+      <div data-reveal><Faq items={page.faqs} /></div>
+    </div>
+  </section>
+
+  <section class="section--tight bg-paper" aria-label="Related pages">
+    <div class="wrap">
+      <p class="eyebrow">Related</p>
+      <div class="related">
+        {page.related.map((r) => <a href={r.href}><span>{r.kicker}</span><b>{r.label}</b></a>)}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta heading={page.cta.heading} body={page.cta.body} />
+</Base>

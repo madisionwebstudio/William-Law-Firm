@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+<Base title="Page Not Found | The Williams Law Firm" description="The page you were looking for could not be found." noindex>
+  <PageHero eyebrow="Error 404" title="This page could not be found." lede="The page may have moved. Use the links below or the navigation above to find what you need." mark="404" crumbs={[{ label: 'Not found' }]} cta={false} trust={false} />
+  <section class="section--tight bg-paper">
+    <div class="wrap related">
+      <a href="/criminal-defense/"><span>Practice area</span><b>Criminal Defense</b></a>
+      <a href="/personal-injury/"><span>Practice area</span><b>Personal Injury</b></a>
+      <a href="/contact/"><span>Get in touch</span><b>Contact the firm</b></a>
+    </div>
+  </section>
+  <FinalCta />
+</Base>

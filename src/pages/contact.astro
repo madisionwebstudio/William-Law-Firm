@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import GoogleLine from '../components/GoogleLine.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+const crumbs = [{ label: 'Contact' }];
+const a = site.address;
+---
+<Base
+  title="Contact The Williams Law Firm | Snellville, GA | 404-998-2992"
+  description="Contact attorney Iymaan Williams at The Williams Law Firm, 2330 Scenic Hwy. S, Snellville, GA 30078. Call 404-998-2992 or request a consultation online."
+  crumbs={crumbs}
+>
+  <PageHero
+    eyebrow="Contact"
+    title='Let’s talk about <em class="gold">what happened.</em>'
+    lede="Call the firm or send a short request and you will hear back using the contact method you prefer. You do not need to have your thoughts organized. You only need to reach out."
+    mark="Contact"
+    crumbs={crumbs}
+    cta={false}
+  />
+
+  <section class="section bg-ivory" id="consultation">
+    <div class="wrap split split--even">
+      <div data-reveal>
+        <p class="eyebrow">Reach the firm</p>
+        <h2>Office and contact details.</h2>
+        <dl class="dl" style="margin-top:2.25rem">
+          <div><dt>Phone</dt><dd><a href={site.phoneHref} style="font-family:var(--serif);font-size:2rem;color:var(--navy);line-height:1.1">{site.phoneDisplay}</a></dd></div>
+          <div><dt>Email</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+          <div><dt>Office</dt><dd>{site.name}<br />{a.street}<br />{a.city}, {a.stateName} {a.zip}</dd></div>
+          <div><dt>Hours</dt><dd>{site.hours.map((h) => <>{h.days}: {h.time}<br /></>)}</dd></div>
+          <div><dt>Serving</dt><dd>{site.serviceAreas.join(', ')} and nearby Georgia communities</dd></div>
+        </dl>
+        <p style="margin:2rem 0">
+          <a class="tlink" href={site.directionsUrl} target="_blank" rel="noopener">Get directions <Icon name="arrow" /><span class="sr-only">(opens Google Maps in a new tab)</span></a>
+        </p>
+        <GoogleLine />
+        <div class="callout">
+          <h3>Before you write</h3>
+          <p>
+            Please do not send details of a criminal matter or other confidential information by email or through this
+            website. Contacting the firm does not create an attorney-client relationship. If you have a court date or
+            deadline approaching, call rather than write.
+          </p>
+        </div>
+      </div>
+      <div data-reveal>
+        <ContactForm heading="Request a consultation" />
+      </div>
+    </div>
+  </section>
+</Base>

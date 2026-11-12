@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Icon from '../components/Icon.astro';
+import GoogleG from '../components/GoogleG.astro';
+import GoogleLine from '../components/GoogleLine.astro';
+import portrait from '../assets/attorney-portrait.png';
+import { site, reviews, google } from '../data/site';
+
+const crumbs = [{ label: 'About' }];
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${site.url}/about/#attorney`,
+  name: site.attorney,
+  jobTitle: 'Attorney',
+  worksFor: { '@id': `${site.url}/#firm` },
+  url: `${site.url}/about/`,
+  email: site.email,
+  telephone: '+1-404-998-2992',
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'University of Georgia School of Law' },
+    { '@type': 'CollegeOrUniversity', name: 'Georgia State University' },
+  ],
+  knowsAbout: ['Criminal defense', 'Personal injury law'],
+};
+---
+<Base
+  title="About Attorney Iymaan Williams | The Williams Law Firm, Snellville, GA"
+  description="Meet Iymaan Williams, criminal defense and personal injury attorney in Snellville, GA. UGA School of Law graduate known for clear communication."
+  crumbs={crumbs}
+  schema={[person]}
+>
+  <PageHero
+    eyebrow="About the attorney"
+    title='Iymaan Williams, <em class="gold">Attorney at Law.</em>'
+    lede="A Snellville attorney whose practice is built on a simple idea: people facing a legal problem deserve to be heard, to understand what is happening, and to have a lawyer who is truly present."
+    mark="Williams"
+    crumbs={crumbs}
+    cta={false}
+    trust={false}
+  />
+
+  <section class="section bg-ivory">
+    <div class="wrap split">
+      <div class="sticky" data-reveal>
+        <div class="intro__media">
+          <Image src={portrait} alt="Attorney Iymaan Williams" widths={[360, 560, 832]} sizes="(max-width: 900px) 80vw, 26rem" loading="eager" quality={82} />
+        </div>
+        <dl class="dl" style="margin-top:1.75rem">
+          <div><dt>Phone</dt><dd><a href={site.phoneHref}>{site.phoneDisplay}</a></dd></div>
+          <div><dt>Email</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+          <div><dt>Office</dt><dd>{site.address.street}, {site.address.city}, {site.address.state} {site.address.zip}</dd></div>
+        </dl>
+      </div>
+      <div class="prose" data-reveal>
+        <p class="eyebrow">Biography</p>
+        <h2>The attorney behind the firm.</h2>
+        <p class="lede">
+          Iymaan Williams is the founder of The Williams Law Firm. She represents individuals in criminal defense and
+          personal injury matters from her office in Snellville, Georgia.
+        </p>
+        <p>
+          The two sides of her practice have something in common. Whether a client has been charged with a crime or
+          injured through no fault of their own, they usually arrive at the worst moment of their year, facing a system
+          they have never had to navigate. Her job is to change that: to explain where they stand, protect their rights
+          and do the careful work their case requires.
+        </p>
+        <p>
+          Because the firm is her own, clients work with her directly. She learns the facts herself, prepares the case
+          herself and is the person who answers when a client has a question.
+        </p>
+
+        <h3>Education</h3>
+        <ul class="creds" style="margin-top:1rem">
+          <li><span>Juris Doctor</span><div><b>University of Georgia School of Law</b></div></li>
+          <li><span>Bachelor of Arts</span><div><b>Georgia State University</b></div></li>
+        </ul>
+
+        <h3>Practice areas</h3>
+        <p>
+          <a href="/criminal-defense/">Criminal defense</a>, including <a href="/criminal-defense/dui-defense/">DUI</a>,
+          <a href="/criminal-defense/drug-charges/">drug charges</a> and
+          <a href="/criminal-defense/assault-violent-crimes/">assault and violent crimes</a>; and
+          <a href="/personal-injury/">personal injury</a>, including
+          <a href="/personal-injury/car-accidents/">car accidents</a> and
+          <a href="/personal-injury/slip-and-fall/">slip and fall injuries</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-navy" aria-labelledby="phil-h">
+    <div class="wrap">
+      <div class="measure" data-reveal>
+        <p class="eyebrow">Legal philosophy</p>
+        <h2 id="phil-h">How she practices law.</h2>
+      </div>
+      <ol class="steps">
+        <li data-reveal><span class="n">Listen</span><h3>Your account comes first</h3><p>Every case begins with hearing the client out, fully and without judgment. The details people think are unimportant are often the ones that matter.</p></li>
+        <li data-reveal><span class="n">Explain</span><h3>No jargon, no guessing</h3><p>Clients are told what the law says, what the process looks like and what their choices are, in language that makes sense.</p></li>
+        <li data-reveal><span class="n">Prepare</span><h3>The work behind the result</h3><p>Reports are read closely, evidence is tested and deadlines are tracked, because preparation is what gives a client real options.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section bg-paper" aria-labelledby="comm-h">
+    <div class="wrap split split--even" style="align-items:center">
+      <div class="prose" data-reveal>
+        <p class="eyebrow">Client communication</p>
+        <h2 id="comm-h">Reachable, responsive and clear.</h2>
+        <p>
+          Ask people what frustrates them about lawyers and the answer is usually the same: not hearing back. The firm
+          is deliberately run the other way. Clients know how to reach their attorney, calls are returned and updates
+          are given without having to be requested.
+        </p>
+        <p>
+          It shows in what clients write. Of the firm’s {google.reviewCount} Google reviews, communication is the
+          subject mentioned most often, followed by clear explanations.
+        </p>
+        <p style="margin-top:1.75rem"><GoogleLine note="Read the reviews" /></p>
+      </div>
+      <figure class="review review--lead" data-reveal>
+        <p class="review__theme" style="margin-top:0">{reviews[2].theme}</p>
+        <blockquote style="font-size:clamp(1.4rem,2.1vw,1.85rem)"><p>“{reviews[2].quote}”</p></blockquote>
+        <figcaption>
+          <span><b>{reviews[2].name}</b>Google review</span>
+          <span class="review__src"><GoogleG /> Posted on Google</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <FinalCta
+    heading='Speak with <em class="gold">Iymaan Williams.</em>'
+    body="If you are facing a criminal charge or recovering from an injury, a conversation is the best place to begin."
+  />
+</Base>

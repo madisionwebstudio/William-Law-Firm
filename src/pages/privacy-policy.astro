@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { site } from '../data/site';
+const crumbs = [{ label: 'Privacy Policy' }];
+---
+<Base
+  title="Privacy Policy | The Williams Law Firm"
+  description="How The Williams Law Firm collects, uses and protects information submitted through this website."
+  crumbs={crumbs}
+>
+  <PageHero eyebrow="Legal" title="Privacy policy" lede="How information you share through this website is handled." mark="Privacy" crumbs={crumbs} cta={false} trust={false} />
+  <section class="section bg-paper">
+    <div class="wrap prose measure">
+      <p><em>Draft for attorney review before publication.</em></p>
+      <h2>Information you provide</h2>
+      <p>
+        When you submit the consultation request form, the firm receives the information you enter: your name, phone
+        number, email address, the general type of legal matter and your preferred contact method. The form
+        intentionally does not ask for details about your case.
+      </p>
+      <h3>How it is used</h3>
+      <p>
+        This information is used only to respond to your enquiry and to arrange a consultation. It is not sold, and it
+        is not shared with third parties except service providers that help deliver the message to the firm, or where
+        required by law.
+      </p>
+      <h3>No attorney-client relationship</h3>
+      <p>
+        Submitting a form, sending an email or calling the firm does not by itself create an attorney-client
+        relationship. Please do not send confidential or time-sensitive information until such a relationship has been
+        established in writing.
+      </p>
+      <h3>Website data</h3>
+      <p>
+        Like most websites, this site’s hosting provider may automatically log technical information such as your IP
+        address, browser type and the pages you visit. This site does not use advertising cookies.
+      </p>
+      <h3>Links to other sites</h3>
+      <p>
+        This site links to third-party services, including Google, where the firm’s reviews are published. Those
+        services have their own privacy policies.
+      </p>
+      <h3>Contact</h3>
+      <p>
+        Questions about this policy, or requests to correct or delete information you submitted, can be sent to
+        <a href={`mailto:${site.email}`}>{site.email}</a> or made by phone at <a href={site.phoneHref}>{site.phoneDisplay}</a>.
+      </p>
+    </div>
+  </section>
+  <FinalCta />
+</Base>

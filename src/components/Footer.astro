@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-gold.png';
+import GoogleG from './GoogleG.astro';
+import { site, nav, google } from '../data/site';
+const a = site.address;
+---
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <Image src={logo} alt="The Williams Law Firm" widths={[260, 520]} sizes="208px" />
+        <p>Criminal defense and personal injury representation from attorney {site.attorney}, based in Snellville, Georgia.</p>
+        <a class="footer__g" href={google.reviewsUrl} target="_blank" rel="noopener">
+          <GoogleG /> {google.rating} · {google.reviewCount} Google reviews
+        </a>
+      </div>
+      <nav aria-label="Practice areas">
+        <h2>Practice areas</h2>
+        <ul>
+          {[...nav.criminal, ...nav.injury].map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+      <nav aria-label="Firm">
+        <h2>The firm</h2>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About the attorney</a></li>
+          <li><a href="/#reviews">Client reviews</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href={google.writeReviewUrl} target="_blank" rel="noopener">Leave a Google review</a></li>
+          <li><a href="/privacy-policy/">Privacy policy</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Contact</h2>
+        <address>
+          {site.name}<br />
+          {a.street}<br />
+          {a.city}, {a.stateName} {a.zip}<br />
+          <a href={site.phoneHref}>{site.phoneDisplay}</a><br />
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </address>
+        <ul style="display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;margin-top:1.25rem">
+          {site.social.map((s) => <li style="margin:0"><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}
+        </ul>
+      </div>
+    </div>
+    <div class="footer__legal">
+      <p>
+        <strong>Legal disclaimer.</strong> The information on this website is for general informational purposes only and is
+        not legal advice. Viewing this site, or contacting the firm through it, does not create an attorney-client
+        relationship. Please do not send confidential information until an attorney-client relationship has been
+        established. Every case is different, and past results do not guarantee a similar outcome. Attorney responsible
+        for this website: {site.attorney}, {site.name}, {a.street}, {a.city}, {a.stateName} {a.zip}.
+      </p>
+      <div class="footer__bar">
+        <span>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</span>
+        <span>Google and the Google logo are trademarks of Google LLC.</span>
+      </div>
+    </div>
+  </div>
+</footer>

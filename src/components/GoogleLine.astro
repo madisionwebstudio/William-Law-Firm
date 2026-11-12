@@ -1,0 +1,13 @@
+---
+/** Compact, single-line Google trust signal for use beside CTAs. */
+import GoogleG from './GoogleG.astro';
+import Stars from './Stars.astro';
+import { google } from '../data/site';
+interface Props { note?: string }
+const { note = 'Read client reviews' } = Astro.props;
+---
+<a class="gline" href={google.reviewsUrl} target="_blank" rel="noopener">
+  <GoogleG />
+  <Stars />
+  <span><b>{google.rating}</b> from {google.reviewCount} Google reviews · <u>{note}</u><span class="sr-only"> (opens in a new tab)</span></span>
+</a>

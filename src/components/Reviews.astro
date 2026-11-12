@@ -1,0 +1,72 @@
+---
+/**
+ * Editorial Google reviews section. All figures and quotes come from src/data/site.ts.
+ * No Review / AggregateRating structured data is emitted here by design
+ * (Google treats self-published reviews on LocalBusiness pages as self-serving).
+ */
+import GoogleG from './GoogleG.astro';
+import Stars from './Stars.astro';
+import Icon from './Icon.astro';
+import { google, reviews } from '../data/site';
+const [lead, ...rest] = reviews;
+---
+<section class="section reviews" id="reviews" aria-labelledby="reviews-h">
+  <div class="wrap">
+    <div class="reviews__head" data-reveal>
+      <div>
+        <p class="eyebrow">Client reviews</p>
+        <h2 id="reviews-h"><span>Trusted by clients.</span><span>Committed to <em class="gold" style="color:var(--gold-deep)">their future.</em></span></h2>
+      </div>
+      <div class="scorecard">
+        <div class="scorecard__top">
+          <span class="scorecard__num">{google.rating}</span>
+          <div>
+            <Stars />
+            <div class="scorecard__g"><GoogleG /> <span>Based on <b>{google.reviewCount} Google reviews</b></span></div>
+          </div>
+        </div>
+        <small>Rating as shown on the firm's Google Business Profile, {google.verifiedOn}.</small>
+      </div>
+    </div>
+
+    <div class="reviews__grid">
+      <figure class="review review--lead" data-reveal>
+        <Stars />
+        <p class="review__theme">{lead.theme}</p>
+        <blockquote><p>“{lead.quote}”</p></blockquote>
+        <figcaption>
+          <span><b>{lead.name}</b>Google review</span>
+          <span class="review__src"><GoogleG /> Posted on Google</span>
+        </figcaption>
+      </figure>
+      {rest.map((r) => (
+        <figure class="review" data-reveal>
+          <Stars />
+          <p class="review__theme">{r.theme}</p>
+          <blockquote><p>“{r.quote}”</p></blockquote>
+          <figcaption>
+            <span><b>{r.name}</b>Google review</span>
+            <span class="review__src"><GoogleG /> Posted on Google</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <ul class="topics" aria-label="Topics clients mention most often in their Google reviews" data-reveal>
+      <li class="lbl">What reviewers mention</li>
+      {google.topics.map((t) => <li><b>{t.count}</b>{t.label}</li>)}
+    </ul>
+
+    <div class="reviews__foot">
+      <div class="btn-row">
+        <a class="btn btn--navy" href={google.reviewsUrl} target="_blank" rel="noopener">Read all {google.reviewCount} reviews on Google <Icon name="arrow" class="arrow" /><span class="sr-only">(opens in a new tab)</span></a>
+        <a class="btn btn--line" href={google.writeReviewUrl} target="_blank" rel="noopener">Leave a Google review<span class="sr-only"> (opens in a new tab)</span></a>
+      </div>
+    </div>
+    <p class="fine" style="margin-top:1.5rem">
+      Reviews are excerpts of public Google reviews, shown with the reviewer's name as displayed on Google. Topic counts are the
+      number of reviews Google reports as mentioning each subject. Reviews describe individual experiences; every case is
+      different and past results do not guarantee a similar outcome.
+    </p>
+  </div>
+</section>

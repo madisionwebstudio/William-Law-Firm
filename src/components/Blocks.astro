@@ -1,0 +1,97 @@
+---
+import type { Block } from '../data/practice';
+interface Props { blocks: Block[] }
+const { blocks } = Astro.props;
+const dark = (b: Block) => b.bg === 'bg-navy' || b.bg === 'bg-deep';
+---
+{blocks.map((b) => (
+  <section class:list={['section', b.bg ?? 'bg-paper']}>
+    <div class="wrap">
+      {b.type === 'prose' && (
+        <div class="split split--rev">
+          <div class="prose" data-reveal>
+            {b.eyebrow && <p class="eyebrow">{b.eyebrow}</p>}
+            <h2>{b.h}</h2>
+            <Fragment set:html={b.html} />
+          </div>
+          {b.aside && (
+            <aside class="callout sticky" data-reveal style="margin:0">
+              <h3>{b.aside.h}</h3>
+              <Fragment set:html={b.aside.html} />
+            </aside>
+          )}
+        </div>
+      )}
+
+      {b.type === 'cards' && (
+        <>
+          <div class="measure" style="margin-bottom:clamp(2rem,4vw,3.5rem)" data-reveal>
+            {b.eyebrow && <p class="eyebrow">{b.eyebrow}</p>}
+            <h2>{b.h}</h2>
+            {b.intro && <p class="lede" style="margin-top:1.25rem">{b.intro}</p>}
+          </div>
+          <div class:list={['cards', b.cols === 2 && 'cards--2']} data-reveal>
+            {b.items.map((i) => (
+              <div>
+                {i.k && <span class="k">{i.k}</span>}
+                <h3>{i.h}</h3>
+                <p>{i.p}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {b.type === 'ledger' && (
+        <div class="split">
+          <div class="sticky" data-reveal>
+            {b.eyebrow && <p class="eyebrow">{b.eyebrow}</p>}
+            <h2>{b.h}</h2>
+            {b.intro && <p class="lede" style="margin-top:1.25rem">{b.intro}</p>}
+          </div>
+          <ul class="ledger" data-reveal>
+            {b.items.map((i) => (
+              <li>
+                <h3>{i.h}</h3>
+                <p>{i.p}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {b.type === 'checks' && (
+        <div class="split">
+          <div class="sticky" data-reveal>
+            {b.eyebrow && <p class="eyebrow">{b.eyebrow}</p>}
+            <h2>{b.h}</h2>
+            {b.intro && <p class="lede" style="margin-top:1.25rem">{b.intro}</p>}
+            {b.note && <p class="fine" style="margin-top:1.5rem">{b.note}</p>}
+          </div>
+          <ul class="checks" data-reveal>
+            {b.items.map((i) => <li set:html={i} />)}
+          </ul>
+        </div>
+      )}
+
+      {b.type === 'steps' && (
+        <>
+          <div class="measure" data-reveal>
+            {b.eyebrow && <p class="eyebrow">{b.eyebrow}</p>}
+            <h2>{b.h}</h2>
+            {b.intro && <p class="lede" style="margin-top:1.25rem">{b.intro}</p>}
+          </div>
+          <ol class:list={['steps', b.items.length === 4 && 'steps--4', !dark(b) && 'steps--light']}>
+            {b.items.map((i) => (
+              <li data-reveal>
+                {i.k && <span class="n">{i.k}</span>}
+                <h3>{i.h}</h3>
+                <p>{i.p}</p>
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
+    </div>
+  </section>
+))}
